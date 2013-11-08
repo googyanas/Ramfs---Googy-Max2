@@ -7,7 +7,7 @@ busybox mount -t sysfs sysfs /sys
 if busybox grep -q 1 /sys/class/power_supply/battery/batt_lp_charging ; then
   # low power mode
   echo 0 > /proc/sys/kernel/rom_feature_set
-  cp -a /res/misc/init.41/* /
+  cp -a /res/misc/init.43/* /
   chmod 755 /innt
   chmod 644 /*.rc
   chmod 644 /*.prop
@@ -62,7 +62,7 @@ if [ "$NEXTBOOT" == "0" ]; then
   mv -f /res/etc /
   umount /.secondrom
   echo 0 > /proc/sys/kernel/rom_feature_set
-  mv -f /res/misc/init.41/* /
+  mv -f /res/misc/init.43/* /
   mv -f /res/misc/recovery/* /
   chmod 755 /innt
   chmod 644 /*.smdk4x12
@@ -120,80 +120,48 @@ fi
 rm -f /*.ggy
 
 MIUI=0
-CM10=0
-CM101=0
 CM102=0
-SAMMY42=0
+SAMMY43=0
 
    [ -f /system/framework/miui-framework.jar ] && MIUI=1
-   [ -f /system/framework/seccamera.jar ] || CM10=1
-   [ -f /system/framework/framework2.jar ] || CM101=1
-   [ -f /system/framework/telephony-common.jar ] && SAMMY42=1
+   [ -f /system/framework/telephony-msim.jar ] || CM102=1
+   [ -f /system/framework/telephony-common.jar ] && SAMMY43=1
 
-if busybox grep -q ro.build.version.release=4.3 /system/build.prop; then
-   CM102=1
-fi
+# if busybox grep -q ro.build.version.release=4.3 /system/build.prop; then
+#    CM102=1
+# fi
 
-if [ "$CM101" == 1 ];
+if [ "$CM102" == 1 ];
 then
-echo "cm101" > /cm101.ggy;
+echo "cm102" > /cm102.ggy;
    if busybox grep -q 1 /sys/class/power_supply/battery/batt_lp_charging ; then
      echo 0 > /proc/sys/kernel/rom_feature_set
-     cp -f /res/misc/init.cm10.1/lpm.rc init.rc
+     cp -f /res/misc/init.cm10.2/lpm.rc init.rc
      rm -f init.smdk4x12.rc
    else
      echo 7 > /proc/sys/kernel/rom_feature_set
-#    mv -f /lib/modules/dhd_cm.ko /lib/modules/dhd.ko
-	if [ "$CM102" == 1 ];
-	then
 	  echo "cm102" > /cm102.ggy;
 	  mv -f /res/misc/init.cm10.2/* /
 	  CM102=1
-	else
-	  mv -f /res/misc/init.cm10.1/* /
-	fi
    fi
 else
-  if [ "$CM10" == 1 ];
-  then
-    echo "cm10" > /cm10.ggy;
-    echo 3 > /proc/sys/kernel/rom_feature_set
-#    mv -f /lib/modules/dhd_cm.ko /lib/modules/dhd.ko
-    mv -f /res/misc/init.cm10/* /
-  else
-    if [ "$SAMMY42" == 1 ];
-    then
-      echo "sammy42" > /sammy42.ggy;
-      echo 6 > /proc/sys/kernel/rom_feature_set
-      mv -f /res/misc/init.42/* /
-    else
-   echo "sammy41" > /sammy41.ggy;
+   echo "sammy43" > /sammy43.ggy;
    if busybox grep -q 1 /sys/class/power_supply/battery/batt_lp_charging ; then
      echo 0 > /proc/sys/kernel/rom_feature_set
-     cp -f /res/misc/init.41/lpm.rc init.rc
+     cp -f /res/misc/init.43/lpm.rc init.rc
      rm -f init.smdk4x12.rc
    else
      echo 2 > /proc/sys/kernel/rom_feature_set
-     mv -f /res/misc/init.41/* /
+     mv -f /res/misc/init.43/* /
    fi
-    fi
-  fi
+  
 fi
 
 if [ "$SECONDROM" == "1" ];then
   mv /init.smdk4x12.rc.2 /init.smdk4x12.rc
   mv /init.rc.2 /init.rc
   mv /fstab.smdk4x12.2 /fstab.smdk4x12
-	if [ "$CM102" == 1 ];then
-	  rm -f /system/etc/init.d/10sd_mount_ggy
-	  rm -f /system/etc/init.d/10sd_mount
-	else
-	  rm -f /system/etc/init.d/10sd_mount_ggy
-	  rm -f /system/etc/init.d/10sd_mount
-	fi
 else
-  rm -f /system/etc/init.d/10sd_mount
-  rm -f /system/etc/init.d/10sd_mount_ggy
   rm -f /init.rc.2 /init.smdk4x12.rc.2 /fstab.smdk4x12.2
 fi
 
