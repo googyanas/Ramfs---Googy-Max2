@@ -3,7 +3,8 @@ import init.bt.rc
 
 on early-init
     mkdir /efs 0771 radio system
-# on init
+
+on init
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage/emulated 0555 root root
@@ -43,6 +44,9 @@ on early-init
     symlink /data/app /factory
     
     mkdir /preload 0771 system system 
+
+on init
+exec "/sbin/ffu"
 
     # Vibetonz
     export VIBE_PIPE_PATH /dev/pipes

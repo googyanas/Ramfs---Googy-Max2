@@ -119,13 +119,19 @@ fi
 
 rm -f /*.ggy
 
-MIUI=0
-CM102=0
 SAMMY43=0
+CM102=0
 
-   [ -f /system/framework/miui-framework.jar ] && MIUI=1
-   [ -f /system/framework/telephony-msim.jar ] || CM102=1
-   [ -f /system/framework/telephony-common.jar ] && SAMMY43=1
+#   [ -f /system/framework/telephony-msim.jar ] && CM102=1
+#   [ -f /system/framework/telephony-common.jar ] && SAMMY43=1
+
+if [ -f /system/framework/telephony-msim.jar ];then
+   CM102=1
+   SAMMY43=0
+else
+   CM102=0
+   SAMMY43=1
+fi
 
 # if busybox grep -q ro.build.version.release=4.3 /system/build.prop; then
 #    CM102=1
@@ -154,7 +160,6 @@ else
      echo 2 > /proc/sys/kernel/rom_feature_set
      mv -f /res/misc/init.43/* /
    fi
-  
 fi
 
 if [ "$SECONDROM" == "1" ];then
