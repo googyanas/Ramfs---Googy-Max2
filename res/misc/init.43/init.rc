@@ -19,6 +19,7 @@ on early-init
     # This should occur before anything else (e.g. ueventd) is started.
     setcon u:r:init:s0
 
+    symlink /efs /factory
     start ueventd
 
 # create mountpoints
@@ -724,8 +725,15 @@ service console /system/bin/sh
     class core
     console
     disabled
-    user root
-    group root
+    group log
+
+service console_user /system/bin/sh
+    class core
+    console
+    disabled
+    user shell
+    group shell log
+
 service auditd /system/bin/auditd -k
     class main
     seclabel u:r:auditd:s0
