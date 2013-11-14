@@ -77,6 +77,14 @@ cat << ENDCONFIG
               <seekBar description="FB earlysuspend delay to run CRT animation when you turn the screen off." 
 		name="FB Earlysuspend Delay" action="generic /sys/power/fbearlysuspend_delay" unit=" ms" min="0" reversed="false" step="100" max="1000"/>
             </settingsPane>
+    <settingsPane description="Touch-to-Wake settings" name="Touch-to-Wake Settings">
+       <spinner description="Touch-to-Wake" name="Touch-to-Wake" action="touch2wake touchwake">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+        </spinner>
+      <seekBar description="Touch-To-Wake Delay in seconds (Default is 5ms). Setting Delay to 0 makes Touch-to-Wake permanently active !" 
+		name="Touch-To-Wake Delay" action="touch2wake touchwakedelay" unit=" sec" min="0" reversed="false" step="1" max="60"/>
+   </settingsPane>
   </settingsTab>
   
   <settingsTab name="Misc">
