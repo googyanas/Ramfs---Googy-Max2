@@ -111,6 +111,9 @@ else
   fi
 fi
 
+# Hack to enforce booting to 1st rom
+SECONDROM=0
+
 if [ "$SECONDROM" == "1" ]; then
   mount -t ext4 /.secondrom/media/.secondrom/system.img /system
 else
