@@ -46,17 +46,17 @@ then
     chown 0.0 /system/xbin/daemonsu
     chmod 6755 /system/xbin/daemonsu
     
-    rm -f /system/app/*uper?ser.apk
-    rm -f /system/app/?uper?u.apk
-    rm -f /system/app/*chainfire?supersu*.apk
-    rm -f /data/app/*uper?ser.apk
-    rm -f /data/app/?uper?u.apk
-    rm -f /data/app/*chainfire?supersu*.apk
-    rm -rf /data/dalvik-cache/*uper?ser.apk*
-    rm -rf /data/dalvik-cache/*chainfire?supersu*.apk*
-    xzcat /res/misc/payload/Superuser.apk.xz > /system/app/Superuser.apk
-    chown 0.0 /system/app/Superuser.apk
-    chmod 644 /system/app/Superuser.apk
+#    rm -f /system/app/*uper?ser.apk
+#    rm -f /system/app/?uper?u.apk
+#    rm -f /system/app/*chainfire?supersu*.apk
+#    rm -f /data/app/*uper?ser.apk
+#    rm -f /data/app/?uper?u.apk
+#    rm -f /data/app/*chainfire?supersu*.apk
+#    rm -rf /data/dalvik-cache/*uper?ser.apk*
+#    rm -rf /data/dalvik-cache/*chainfire?supersu*.apk*
+#    xzcat /res/misc/payload/Superuser.apk.xz > /system/app/Superuser.apk
+#    chown 0.0 /system/app/Superuser.apk
+#    chmod 644 /system/app/Superuser.apk
   fi
 fi;
 
@@ -72,18 +72,18 @@ if [ ! -f /system/app/STweaks_Googy-Max.apk ];then
   chmod 644 /system/app/STweaks_Googy-Max.apk
 fi
 
-#echo "ntfs-3g..."
-#if [ ! -s /system/xbin/ntfs-3g ];
-#then
-#  if [ "$payload_extracted" == "0" ];then
-#    extract_payload
-#  fi
-#  xzcat /res/misc/payload/ntfs-3g.xz > /system/xbin/ntfs-3g
-#  chown 0.0 /system/xbin/ntfs-3g
-#  chmod 755 /system/xbin/ntfs-3g
-#fi
-#
-#rm -rf /res/misc/payload
-#
-#/sbin/busybox mount -t rootfs -o remount,ro rootfs
-#mount -o remount,ro /system
+echo "ntfs-3g..."
+if [ ! -s /system/xbin/ntfs-3g ];
+then
+  if [ "$payload_extracted" == "0" ];then
+    extract_payload
+  fi
+  xzcat /res/misc/payload/ntfs-3g.xz > /system/xbin/ntfs-3g
+  chown 0.0 /system/xbin/ntfs-3g
+  chmod 755 /system/xbin/ntfs-3g
+fi
+
+rm -rf /res/misc/payload
+
+/sbin/busybox mount -t rootfs -o remount,ro rootfs
+mount -o remount,ro /system
