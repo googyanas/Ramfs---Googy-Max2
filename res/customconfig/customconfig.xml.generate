@@ -89,6 +89,28 @@ cat << ENDCONFIG
    </settingsPane>
   </settingsTab>
   
+  <settingsTab name="Zram">
+    <settingsPane description="Zram" name="Zram">
+      <checkbox description="Changing any ZRAM setting NEEDS A REBOOT to be ACTIVATED !!! For the first time use, you may have to set ZRAM off then on followed by a reboot." name="Zram Switch" action="generic /tmp/zram_switch" label="ZRAM"/>
+        <seekBar description="Set ZRAM total disk size in MB for ALL of the ZRAM Disks (example : choosing total 400MB and 2 zram disks means 200MB each !)" 
+		name="Zram Size" action="generic /tmp/zram_size" unit=" MB" min="200" reversed="false" step="50" max="2000"/>
+		
+        <spinner description="Set number of ZRAM disks" name="Zram Disks" action="generic /tmp/zram_disks">
+             <spinnerItem name="1" value="1"/> 
+             <spinnerItem name="2" value="2"/> 
+             <spinnerItem name="4" value="4"/> 
+        </spinner>
+
+        <spinner description="Set Swappiness in %" name="Swappiness" action="generic /tmp/zram_swappiness">
+             <spinnerItem name="70 %" value="70"/> 
+             <spinnerItem name="80 %" value="80"/> 
+             <spinnerItem name="90 %" value="90"/> 
+             <spinnerItem name="100 %" value="100"/> 
+        </spinner>
+       <button description="Apply ZRAM settings immediately. PLEASE apply your settings before pushing the button" name="Set ZRAM" action="zramapply" label="Set ZRAM"/>
+    </settingsPane>
+  </settingsTab>
+    
   <settingsTab name="Misc">
     <settingsPane description="Misc Settings" name="Misc Settings">
       <checkbox description="Enable or Disable Android Logger (needs reboot)" name="Android Logger" action="generic01 /tmp/logger" label="Android Logger"/>      
@@ -636,8 +658,7 @@ cat << ENDCONFIG
                action="generic /tmp/lulzactiveq_up_nr_cpus" 
                unit="" min="1" reversed="false" step="1" max="3"/>
 
- </settingsPane>
-   
+ </settingsPane> 
     </settingsTab>
     
   <settingsTab name="Dualboot">
