@@ -214,9 +214,13 @@ on boot
     write /proc/sys/vm/swappiness 130
 
 on fs
+    exec /sbin/mount_system.sh
     mount_all /fstab.smdk4x12
     exec /sbin/ext/db-bindmount.sh
     mount ext4 loop@/.secondrom/media/.secondrom/system.img /system rw noatime wait
+
+    exec /sbin/mount.sh
+
     setprop ro.crypto.fuse_sdcard true
 
 # for LogMeIn
@@ -227,7 +231,7 @@ on fs
     chown graphics /system/bin/RescueServer
     chmod 0755 /system/bin/RescueServer
 
-    mount ext4 /dev/block/mmcblk0p9 /system ro wait noatime remount
+#    mount ext4 /dev/block/mmcblk0p9 /system ro wait noatime remount
 	
 # Permissions for DVFS
     chown radio system /sys/power/cpufreq_table

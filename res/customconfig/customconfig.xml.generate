@@ -300,6 +300,8 @@ cat << ENDCONFIG
 		name="AC Charge" action="generic /sys/kernel/fast_charge/ac_charge_level" unit="mA" min="800" reversed="false" step="100" max="1500"/>
       <seekBar description="USB charge current (default 475)" 
 		name="USB Charge" action="generic /sys/kernel/fast_charge/usb_charge_level" unit="mA" min="475" reversed="false" step="25" max="900"/>
+      <seekBar description="Wireless charge current (default 475)" 
+		name="Wireless Charge" action="generic /sys/kernel/fast_charge/wireless_charge_level" unit="mA" min="475" reversed="false" step="25" max="1000"/>
     </settingsPane>
     
     <settingsPane description="TCP settings" name="TCP settings">
@@ -807,6 +809,16 @@ cat << ENDCONFIG
     </settingsTab>
     
   <settingsTab name="Dualboot">
+    <settingsPane description="Dual-Boot Settings. Warning: No confirmation will be asked for reboot buttons." name="Dual-Boot Settings">
+      <button description="Reboot into 2ndROM Utils which let you configure, clone or backup the 2ndROM" name="Reboot into 2ndROM Utils" action="reboot-into 0" label="Reboot into 2ndROM Utils"/>
+      <button description="Reboot into 1stROM" name="Reboot into 1stROM" action="reboot-into 1" label="Reboot into 1stROM"/>
+      <button description="Reboot into 2ndROM" name="Reboot into 2ndROM" action="reboot-into 2" label="Reboot into 2ndROM"/>
+      <checkbox description="Check this if you don't want boot logo to be shown. If this options is checked boot logo will not be shown even if you have 2ndROM installed." name="No boot-logo" action="no-boot-logo" label="No boot-logo"/>
+      <spinner description="Default ROM to boot into. If you don't have 2ndROM installation 1stROM will be booted. If you press the home or volume-down buttons during the boot logo the alternative ROM will be booted, i.e. 1stROM will be booted if the default ROM selection is the 2ndROM." name="Default ROM" action="defaultrom">
+             <spinnerItem name="1stROM" value="0"/> 
+             <spinnerItem name="2ndROM" value="1"/> 
+      </spinner>
+    </settingsPane>
     <settingsPane description="Hijack recovery if you like to use 2ndROM utils as recovery. Warning: No confirmation will be asked for buttons." name="Hijack Recovery">
       <button description="This button will simply flash the kernel to the recovery partition and you will have 2ndROM Utils as your 3-button combo recovery" name="Hijack Recovery" action="hijack-recovery" label="Hijack Recovery"/>
     </settingsPane>

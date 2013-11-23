@@ -41,6 +41,11 @@ chmod 755 /mnt
 mkdir /.secondrom
 mount -t ext4 /dev/block/mmcblk0p12 /.secondrom
 
+# SECONDARYBOOT=0
+# if [ -f /.secondrom/.secondaryboot ] && [ -f /.secondrom/media/.secondrom/system.img ] ; then
+# SECONDARYBOOT=`cat /.secondrom/.secondaryboot`
+# fi
+
 NEXTBOOT=`cat /.secondrom/media/.nextboot`
 rm -f /.secondrom/media/.nextboot
 DEFAULTROM=`cat /.secondrom/media/.defaultrom`
@@ -86,9 +91,9 @@ else
     echo 2 > /.secondrom/media/.secondrom/data/.layout_version
     mkdir /.secondrom/media/0
   fi
-  if [ "$NEXTBOOT" == "1" ];then
+  if [ "$NEXTBOOT" == "1" ] ;then
     SECONDROM=0;
-  elif [ "$NEXTBOOT" == "2" ];then
+  elif [ "$NEXTBOOT" == "2" ] ;then
     SECONDROM=1;
   else
     if [ "$NOBOOTLOGO" == "1" ];then
@@ -112,7 +117,7 @@ else
 fi
 
 # Hack to enforce booting to 1st rom
-SECONDROM=0
+# SECONDROM=0
 
 if [ "$SECONDROM" == "1" ]; then
   mount -t ext4 /.secondrom/media/.secondrom/system.img /system
@@ -123,35 +128,35 @@ fi
 rm -f /*.ggy
 
 SAMMY43=0
-CM102=0
+TEMA44=0
 
-#   [ -f /system/framework/telephony-msim.jar ] && CM102=1
+#   [ -f /system/framework/telephony-msim.jar ] && TEMA44=1
 #   [ -f /system/framework/telephony-common.jar ] && SAMMY43=1
 
-if [ -f /system/framework/telephony-msim.jar ];then
-   CM102=1
+if [ -f /system/framework/webviewchromium.jar ];then
+   TEMA44=1
    SAMMY43=0
 else
-   CM102=0
+   TEMA44=0
    SAMMY43=1
 fi
 
 # if busybox grep -q ro.build.version.release=4.3 /system/build.prop; then
-#    CM102=1
+#    TEMA44=1
 # fi
 
-if [ "$CM102" == 1 ];
+if [ "$TEMA44" == 1 ];
 then
-echo "cm102" > /cm102.ggy;
+echo "tema44" > /tema44.ggy;
    if busybox grep -q 1 /sys/class/power_supply/battery/batt_lp_charging ; then
      echo 0 > /proc/sys/kernel/rom_feature_set
-     cp -f /res/misc/init.cm10.2/lpm.rc init.rc
+     cp -f /res/misc/init.tema44/lpm.rc init.rc
      rm -f init.smdk4x12.rc
    else
      echo 7 > /proc/sys/kernel/rom_feature_set
-	  echo "cm102" > /cm102.ggy;
-	  mv -f /res/misc/init.cm10.2/* /
-	  CM102=1
+	  echo "tema44" > /tema44.ggy;
+	  mv -f /res/misc/init.tema44/* /
+	  TEMA44=1
    fi
 else
    echo "sammy43" > /sammy43.ggy;
@@ -182,21 +187,6 @@ chmod 644 /*.smdk4x12
 chmod 644 /*.rc
 chmod 644 /*.prop
 chmod -R 755 /lib
-
-# misc mods for i9300
-insmod /lib/modules/m0_mods.ko
-# cpu undervolting interfaces
-insmod /lib/modules/cpu_undervolting.ko
-# mali (gpu) interfaces
-insmod /lib/modules/mali_control.ko
-# additional CPU governors
-insmod /lib/modules/cpufreq_hotplug.ko
-insmod /lib/modules/cpufreq_lulzactiveq.ko
-# additional I/O schedulers
-insmod /lib/modules/sio-iosched.ko
-insmod /lib/modules/vr-iosched.ko
-# audio enhancements
-# insmod /lib/modules/kscoobydoo.ko devicename=scoobydoo_sound
 
 exec /sbin/init2
 
