@@ -42,6 +42,15 @@ case "$default_governor" in
         echo $pegasusq_sampling_rate_min > /sys/devices/system/cpu/cpufreq/pegasusq/sampling_rate_min
         echo $pegasusq_up_nr_cpus > /sys/devices/system/cpu/cpufreq/pegasusq/up_nr_cpus
         echo $pegasusq_up_threshold > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold       
+        echo $pegasusq_up_threshold_diff > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold_diff
+        echo $pegasusq_grad_up_threshold > /sys/devices/system/cpu/cpufreq/pegasusq/grad_up_threshold
+        echo $pegasusq_fast_down_threshold > /sys/devices/system/cpu/cpufreq/pegasusq/fast_down_threshold
+        echo $pegasusq_cpu_online_bias_count > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_online_bias_count
+        echo $pegasusq_cpu_online_bias_up_threshold > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_online_bias_up_threshold
+        echo $pegasusq_cpu_online_bias_down_threshold > /sys/devices/system/cpu/cpufreq/pegasusq/cpu_online_bias_down_threshold
+        echo $pegasusq_freq_step_dec > /sys/devices/system/cpu/cpufreq/pegasusq/freq_step_dec
+        echo $pegasusq_up_threshold_at_fast_down > /sys/devices/system/cpu/cpufreq/pegasusq/up_threshold_at_fast_down
+        echo $pegasusq_freq_for_fast_down > /sys/devices/system/cpu/cpufreq/pegasusq/freq_for_fast_down
   ;; 
   1)
         echo "lulzactiveq" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
@@ -231,6 +240,9 @@ case "$default_governor" in
     ;;
   7)  
         echo "smartassV2" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    ;;
+  8)  
+        echo "pegasusqstock" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     ;;
 esac;
 
