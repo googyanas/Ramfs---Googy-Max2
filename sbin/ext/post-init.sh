@@ -372,3 +372,136 @@ case "$default_governor" in
         echo "pegasusqstock" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     ;;
 esac;
+
+### Sound engine initialization ###
+
+  echo 0 > /sys/class/misc/scoobydoo_sound_control/enable
+  echo 1 > /sys/class/misc/wolfson_control/switch_master
+  
+    echo "$switch_eq_speaker" > /sys/class/misc/wolfson_control/switch_eq_speaker
+    echo "$eq_sp_gain_1" > /sys/class/misc/wolfson_control/eq_sp_gain_1
+    echo "$eq_sp_gain_2" > /sys/class/misc/wolfson_control/eq_sp_gain_2
+    echo "$eq_sp_gain_3" > /sys/class/misc/wolfson_control/eq_sp_gain_3
+    echo "$eq_sp_gain_4" > /sys/class/misc/wolfson_control/eq_sp_gain_4
+    echo "$eq_sp_gain_5" > /sys/class/misc/wolfson_control/eq_sp_gain_5
+    echo "$speaker_left" > /sys/class/misc/wolfson_control/speaker_left
+    echo "$speaker_right" > /sys/class/misc/wolfson_control/speaker_right
+    echo "$speaker_boost_level" > /sys/class/misc/wolfson_control/speaker_boost_level
+    echo "$switch_privacy_mode" > /sys/class/misc/wolfson_control/switch_privacy_mode
+    echo "$switch_eq_headphone" > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "$headphone_left" > /sys/class/misc/wolfson_control/headphone_left
+    echo "$headphone_right" > /sys/class/misc/wolfson_control/headphone_right
+    echo "$stereo_expansion" > /sys/class/misc/wolfson_control/stereo_expansion
+    echo "$mic_level_general" > /sys/class/misc/wolfson_control/mic_level_general
+    echo "$mic_level_camera" > /sys/class/misc/wolfson_control/mic_level_camera
+    echo "$mic_level_call" > /sys/class/misc/wolfson_control/mic_level_call
+    echo "$switch_fll_tuning" > /sys/class/misc/wolfson_control/switch_fll_tuning
+    echo "$switch_oversampling" > /sys/class/misc/wolfson_control/switch_oversampling
+    echo "$switch_dac_direct" > /sys/class/misc/wolfson_control/switch_dac_direct
+    echo "$switch_mono_downmix" > /sys/class/misc/wolfson_control/switch_mono_downmix
+         
+if [ "$switch_eq_headphone" != "0" ];then
+
+    echo "0" > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "$switch_eq_headphone" > /sys/class/misc/wolfson_control/switch_eq_headphone
+
+if [ "$eq_selection2" != "0" ];then
+
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "$eq_hp_gain_1" > /sys/class/misc/wolfson_control/eq_hp_gain_1
+    echo "$eq_hp_gain_2" > /sys/class/misc/wolfson_control/eq_hp_gain_2
+    echo "$eq_hp_gain_3" > /sys/class/misc/wolfson_control/eq_hp_gain_3
+    echo "$eq_hp_gain_4" > /sys/class/misc/wolfson_control/eq_hp_gain_4
+    echo "$eq_hp_gain_5" > /sys/class/misc/wolfson_control/eq_hp_gain_5
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+
+else
+
+case "$eq_preset2" in
+  0)
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_1
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_2
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_3
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_4
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_5
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    ;;
+  1)
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "12" > /sys/class/misc/wolfson_control/eq_hp_gain_1
+    echo "8" > /sys/class/misc/wolfson_control/eq_hp_gain_2
+    echo "3" > /sys/class/misc/wolfson_control/eq_hp_gain_3
+    echo "-1" > /sys/class/misc/wolfson_control/eq_hp_gain_4
+    echo "1" > /sys/class/misc/wolfson_control/eq_hp_gain_5
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    ;;
+  2)
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "10" > /sys/class/misc/wolfson_control/eq_hp_gain_1
+    echo "7" > /sys/class/misc/wolfson_control/eq_hp_gain_2
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_3
+    echo "2" > /sys/class/misc/wolfson_control/eq_hp_gain_4
+    echo "5" > /sys/class/misc/wolfson_control/eq_hp_gain_5
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    ;;
+  3)
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "-5" > /sys/class/misc/wolfson_control/eq_hp_gain_1
+    echo "1" > /sys/class/misc/wolfson_control/eq_hp_gain_2
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_3
+    echo "4" > /sys/class/misc/wolfson_control/eq_hp_gain_4
+    echo "3" > /sys/class/misc/wolfson_control/eq_hp_gain_5
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    ;;
+  4)
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_1
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_2
+    echo "0" > /sys/class/misc/wolfson_control/eq_hp_gain_3
+    echo "-3" > /sys/class/misc/wolfson_control/eq_hp_gain_4
+    echo "-5" > /sys/class/misc/wolfson_control/eq_hp_gain_5
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    ;;
+  5)
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "8" > /sys/class/misc/wolfson_control/eq_hp_gain_1
+    echo "3" > /sys/class/misc/wolfson_control/eq_hp_gain_2
+    echo "-2" > /sys/class/misc/wolfson_control/eq_hp_gain_3
+    echo "3" > /sys/class/misc/wolfson_control/eq_hp_gain_4
+    echo "8" > /sys/class/misc/wolfson_control/eq_hp_gain_5
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    ;;
+  6)
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "12" > /sys/class/misc/wolfson_control/eq_hp_gain_1
+    echo "8" > /sys/class/misc/wolfson_control/eq_hp_gain_2
+    echo "4" > /sys/class/misc/wolfson_control/eq_hp_gain_3
+    echo "2" > /sys/class/misc/wolfson_control/eq_hp_gain_4
+    echo "3" > /sys/class/misc/wolfson_control/eq_hp_gain_5
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    ;;
+  7)
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    echo "10" > /sys/class/misc/wolfson_control/eq_hp_gain_1
+    echo "2" > /sys/class/misc/wolfson_control/eq_hp_gain_2
+    echo "-1" > /sys/class/misc/wolfson_control/eq_hp_gain_3
+    echo "2" > /sys/class/misc/wolfson_control/eq_hp_gain_4
+    echo "10" > /sys/class/misc/wolfson_control/eq_hp_gain_5
+#    echo 0 > /sys/class/misc/wolfson_control/switch_eq_headphone
+#    echo 1 > /sys/class/misc/wolfson_control/switch_eq_headphone
+    ;;
+esac;
+
+fi
+
+fi
+
+    echo "$switch_eq_headphone" > /sys/class/misc/wolfson_control/switch_eq_headphone

@@ -75,6 +75,172 @@ cat << ENDCONFIG
     </settingsPane>
   </settingsTab>
 
+  <settingsTab name="Wolfson Engine">
+ 
+    <settingsPane description="Speaker Tuning Settings" name="Speaker Tuning">
+		
+      <spinner description="Enable speaker equalizer for better bass response on main speakers" name="Speaker Equalizer" action="generic /sys/class/misc/wolfson_control/switch_eq_speaker">
+             <spinnerItem name="Enabled" value="1"/> 
+             <spinnerItem name="Disabled" value="0"/> 
+      </spinner>		
+
+      <seekBar  description="" 
+		name="Bass gain 1" 
+                action="generic /sys/class/misc/wolfson_control/eq_sp_gain_1" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+
+      <seekBar  description="" 
+		name="Bass gain 2" 
+                action="generic /sys/class/misc/wolfson_control/eq_sp_gain_2" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+
+      <seekBar  description="" 
+		name="Mid gain" 
+                action="generic /sys/class/misc/wolfson_control/eq_sp_gain_3" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+
+      <seekBar  description="" 
+		name="Treble gain 1" 
+                action="generic /sys/class/misc/wolfson_control/eq_sp_gain_4" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>                               
+
+      <seekBar  description="" 
+		name="Treble gain 2" 
+                action="generic /sys/class/misc/wolfson_control/eq_sp_gain_5" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+
+      <seekBar  description="External speaker amlification level." 
+		name="Speaker left channel volume" 
+                action="generic /sys/class/misc/wolfson_control/speaker_left" 
+                unit="" min="57" reversed="false" step="1" max="63"/>
+
+      <seekBar  description="" 
+		name="Speaker right channel volume"
+                action="generic /sys/class/misc/wolfson_control/speaker_right" 
+                unit="" min="57" reversed="false" step="1" max="63"/>
+
+      <seekBar  description="" 
+		name="Speaker boost level"
+                action="generic /sys/class/misc/wolfson_control/speaker_boost_level" 
+                unit="" min="0" reversed="false" step="1" max="7"/>
+		
+      <spinner description="Prevent sound output through speakers when headphones are plugged" name="Privacy Mode" action="generic /sys/class/misc/wolfson_control/switch_privacy_mode">
+             <spinnerItem name="Enabled" value="1"/> 
+             <spinnerItem name="Disabled" value="0"/> 
+      </spinner>
+    </settingsPane>
+
+    <settingsPane description="Headphone amplification increases volume only on headphones and headsets." 
+		  name="Headphone Amplification">
+      <seekBar  description="Headphone Amplifier Level (0-63 which corresponds to -57db-6db)" 
+		name="Headphone left channel volume"
+                action="generic /sys/class/misc/wolfson_control/headphone_left" 
+                unit="" min="0" reversed="false" step="1" max="63"/>      
+      <seekBar  description="" 
+		name="Headphone right channel volume"
+                action="generic /sys/class/misc/wolfson_control/headphone_right" 
+                unit="" min="0" reversed="false" step="1" max="63"/>
+    </settingsPane>
+
+    <settingsPane description="The stereo 3D effect produces a virtual 3D effect on sound." 
+		  name="Stereo 3D">
+      <seekBar  description="Stereo 3D level (0-31dB). 0 disables the control." 
+		name="Stereo 3D"
+                action="generic /sys/class/misc/wolfson_control/stereo_3D" 
+                unit="" min="0" reversed="false" step="1" max="31"/>
+    </settingsPane>
+
+    <settingsPane description="Controls the hardware equalizer." 
+                  name="Equalizer settings">
+
+      <spinner description="Enable headphone equalizer for gain controls." name="Headphone equalizer" action="generic /sys/class/misc/wolfson_control/switch_eq_headphone">
+             <spinnerItem name="Disable" value="0"/> 
+             <spinnerItem name="Enable WITHOUT saturation prevention" value="1"/> 
+             <spinnerItem name="Enable WITH saturation prevention" value="2"/> 
+      </spinner>
+             
+      <spinner description="Choose which equalizer settings to use: Presets or Graphical Equalizer." name="EQ Presets" action="eq-presets2 eq_selection2">
+             <spinnerItem name="Use presets" value="0"/> 
+             <spinnerItem name="Use graphical equalizer" value="1"/> 
+      </spinner>
+
+      <spinner description="Hardware Equalizer Presets" name="EQ Presets" action="eq-presets2 eq_preset2">
+             <spinnerItem name="Flat (Disabled)" value="0"/> 
+             <spinnerItem name="Bass-extreme" value="1"/> 
+             <spinnerItem name="Bass and Treble" value="2"/> 
+             <spinnerItem name="Treble" value="3"/> 
+             <spinnerItem name="Classic" value="4"/> 
+             <spinnerItem name="Pleasant for ears" value="5"/> 
+             <spinnerItem name="Eargasm" value="6"/> 
+             <spinnerItem name="Googy-Max" value="7"/> 
+      </spinner>
+
+      <seekBar  description="" 
+		name="Band1 gain" 
+                action="generic /sys/class/misc/wolfson_control/eq_hp_gain_1" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+
+      <seekBar  description="" 
+		name="Band2 gain" 
+                action="generic /sys/class/misc/wolfson_control/eq_hp_gain_2" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+
+      <seekBar  description="" 
+		name="Band3 gain" 
+                action="generic /sys/class/misc/wolfson_control/eq_hp_gain_3" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+
+      <seekBar  description="" 
+		name="Band4 gain" 
+                action="generic /sys/class/misc/wolfson_control/eq_hp_gain_4" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+
+      <seekBar  description="" 
+		name="Band5 gain" 
+                action="generic /sys/class/misc/wolfson_control/eq_hp_gain_5" 
+                unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+    </settingsPane>
+
+    <settingsPane description="The microphone levels control the mic sensitivity." 
+		  name="Microphone control">
+      <seekBar  description="" 
+		name="Microphone level general"
+                action="generic /sys/class/misc/wolfson_control/mic_level_general" 
+                unit="" min="0" reversed="false" step="1" max="31"/>
+
+      <seekBar  description="" 
+		name="Microphone level during active camera"
+                action="generic /sys/class/misc/wolfson_control/mic_level_camera" 
+                unit="" min="0" reversed="false" step="1" max="31"/>
+
+      <seekBar  description="" 
+		name="Microphone level in-call"
+                action="generic /sys/class/misc/wolfson_control/mic_level_call"
+                unit="" min="0" reversed="false" step="1" max="31"/>
+    </settingsPane>
+
+    <settingsPane description="Optimization, conversion quality, signal processing and effect settings" name="Other Settings">
+
+      <spinner description="Tuned WM1811 FLL to generate clock source" name="FLL Tuning" action="generic /sys/class/misc/wolfson_control/switch_fll_tuning">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+      </spinner>
+      <spinner description="For 48kHz sample rate, the DAC oversample rate is 128fs when this option is selected, which makes the music sound better." name="DAC OverSampling" action="generic /sys/class/misc/wolfson_control/switch_oversampling">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+      </spinner>
+      <spinner description="Bypass analog channel mixer and redirect the sound directly to the output." name="dac direct" action="generic /sys/class/misc/wolfson_control/switch_dac_direct">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+      </spinner>
+      <spinner description="This forces the output to be mono even if the source is stereo" name="Force Mono" action="generic /sys/class/misc/wolfson_control/switch_mono_downmix">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+      </spinner>
+           
+    </settingsPane>
+  </settingsTab>
+
   <settingsTab name="Screen">
     <settingsPane description="Other screen related settings" name="Other Settings">
               <seekBar description="FB earlysuspend delay to run CRT animation when you turn the screen off." 
