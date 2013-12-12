@@ -16,6 +16,7 @@ on init
     export EXTERNAL_STORAGE /storage/emulated/legacy
     export EMULATED_STORAGE_SOURCE /mnt/shell/emulated
     export EMULATED_STORAGE_TARGET /storage/emulated
+    export SECONDARY_STORAGE /storage/sdcard1:/storage/usbdisk0
 
     # for backwards compatibility
     symlink /storage/emulated/legacy /sdcard
@@ -45,6 +46,10 @@ on fs
     chown radio system /efs
     chmod 0771 /efs
     exec /sbin/ext/modules.sh
+
+# exfat module
+    insmod /system/lib/modules/exfat_core.ko
+    insmod /system/lib/modules/exfat_fs.ko
 
 on post-fs-data
      # we will remap this as /mnt/sdcard with the sdcard fuse tool
