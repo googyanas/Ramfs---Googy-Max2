@@ -216,8 +216,8 @@ on boot
 on fs
     exec /sbin/mount_system.sh
     mount_all /fstab.smdk4x12
-    exec /sbin/ext/db-bindmount.sh
-    mount ext4 loop@/.secondrom/media/.secondrom/system.img /system rw noatime wait
+#    exec /sbin/ext/db-bindmount.sh
+#    mount ext4 loop@/.secondrom/media/.secondrom/system.img /system rw noatime wait
 
     exec /sbin/mount.sh
 
