@@ -75,6 +75,120 @@ cat << ENDCONFIG
     </settingsPane>
   </settingsTab>
 
+  <settingsTab name="Sound Engine">
+    <settingsPane description="Sound Engine. IMPORTANT : For the changes to be fully applied, please close any active media player before applying your sound engine selection !!!" name="Sound Engine">
+
+        <spinner description="Select default Sound Engine" name="Default Sound Engine" action="activesoundengine soundengine">
+             <spinnerItem name="Stock" value="stock"/> 
+             <spinnerItem name="ScoobyDoo" value="scoobydoo"/> 
+             <spinnerItem name="Wolfson" value="wolfson"/> 
+        </spinner>
+        
+    </settingsPane>
+  </settingsTab>
+
+  <settingsTab name="ScoobyDoo Engine">
+    <settingsPane description="Speaker Tuning Settings" name="Speaker Tuning">
+      <spinner description="Enable speaker tuning for better bass response on main speakers" name="Speaker Tuning" action="generic /sys/class/misc/scoobydoo_sound/speaker_tuning">
+             <spinnerItem name="Enabled" value="1"/> 
+             <spinnerItem name="Disabled" value="0"/> 
+      </spinner>
+      <seekBar description="Speaker Amplification Offset. 0 means stock value. Having too much amplification may cause distortion." 
+		name="Speaker Amplification Offset" action="generic /sys/class/misc/scoobydoo_sound/speaker_offset" unit="" min="-6" reversed="false" step="1" max="6"/>
+    </settingsPane>
+    <settingsPane description="Privacy Mode" name="Privacy Mode">
+      <spinner description="Prevent sound output through speakers when headphones are plugged" name="Privacy Mode" action="generic /sys/class/misc/scoobydoo_sound/privacy_mode">
+             <spinnerItem name="Enabled" value="1"/> 
+             <spinnerItem name="Disabled" value="0"/> 
+      </spinner>
+    </settingsPane>
+
+    <settingsPane description="Headphone Amplification Settings" name="Headphone Amplification">
+      <seekBar description="Headphone Amplifier Level (0-63 which corresponds to -57db-6db)" 
+		name="Headphone Amplifier" action="generic /sys/class/misc/scoobydoo_sound/headphone_amplifier_level" unit="" min="0" reversed="false" step="1" max="63"/>
+      <seekBar description="Headphone Balance (-15 to 15 [Default is 0])" 
+		name="Headphone Balance" action="generic /sys/class/misc/scoobydoo_sound/headphone_balance" unit="" min="-15" reversed="false" step="1" max="15"/>
+    </settingsPane>
+    <settingsPane description="3D Effect Settings" name="3D Effect">
+      <spinner description="3D effect" name="3D Effect" action="generic /sys/class/misc/scoobydoo_sound/stereo_expansion">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+      </spinner>
+      <seekBar description="3D Effect Gain Level (0-31)" 
+		name="3D Effect Gain" action="generic /sys/class/misc/scoobydoo_sound/stereo_expansion_gain" unit="" min="0" reversed="false" step="1" max="31"/>
+    </settingsPane>
+    <settingsPane description="EQ Settings" name="EQ Settings">
+      <spinner description="Choose which equalizer settings to use: Presets or Graphical Equalizer." name="EQ Presets" action="eq-presets eq_selection">
+             <spinnerItem name="Use presets" value="0"/> 
+             <spinnerItem name="Use graphical equalizer" value="1"/> 
+      </spinner>
+    </settingsPane>
+    <settingsPane description="EQ Presets" name="EQ Presets">
+      <spinner description="Hardware Equalizer Presets" name="EQ Presets" action="eq-presets eq_preset">
+             <spinnerItem name="Flat (Disabled)" value="0"/> 
+             <spinnerItem name="Bass-extreme" value="1"/> 
+             <spinnerItem name="Bass and Treble" value="2"/> 
+             <spinnerItem name="Treble" value="3"/> 
+             <spinnerItem name="Classic" value="4"/> 
+             <spinnerItem name="Pleasant for ears" value="5"/> 
+             <spinnerItem name="Eargasm" value="6"/> 
+             <spinnerItem name="Googy-Max" value="7"/> 
+      </spinner>
+    </settingsPane>
+    <settingsPane description="Graphical Equalizer" name="Graphical Equalizer">
+      <seekBar description="" 
+		name="Band1 gain" action="eq-presets eq_band1" unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+      <seekBar description="" 
+		name="Band2 gain" action="eq-presets eq_band2" unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+      <seekBar description="" 
+		name="Band3 gain" action="eq-presets eq_band3" unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+      <seekBar description="" 
+		name="Band4 gain" action="eq-presets eq_band4" unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+      <seekBar description="" 
+		name="Band5 gain" action="eq-presets eq_band5" unit=" dB" min="-12" reversed="false" step="1" max="12"/>
+    </settingsPane>
+    <settingsPane description="EQ Extras" name="EQ Extras">
+      <seekBar description="This will prevent distortion by decreasing the output volume by the selected amount. Leave it 0 if you do not have a distortion problem." 
+		name="Negative Digital Gain" action="eq-presets digital_gain" unit=" dB" min="0" reversed="false" step="1" max="12"/>
+    </settingsPane>
+    <settingsPane description="Optimization, conversion quality, signal processing and effect settings" name="Other Settings">
+      <spinner description="Tuned WM1811 FLL to generate clock source" name="FLL Tuning" action="generic /sys/class/misc/scoobydoo_sound/fll_tuning">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+      </spinner>
+      <spinner description="For 48kHz sample rate, the DAC oversample rate is 128fs when this option is selected, which makes the music sound better." name="DAC OverSampling" action="generic /sys/class/misc/scoobydoo_sound/dac_osr128">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+      </spinner>
+      <spinner description="Bypass analog channel mixer and redirect the sound directly to the output." name="dac direct" action="generic /sys/class/misc/scoobydoo_sound/dac_direct">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+      </spinner>
+      <spinner description="This forces the output to be mono even if the source is stereo" name="Force Mono" action="generic /sys/class/misc/scoobydoo_sound/mono_downmix">
+             <spinnerItem name="Disabled" value="0"/> 
+             <spinnerItem name="Enabled" value="1"/> 
+      </spinner>
+    </settingsPane>
+
+    <settingsPane description="The microphone levels control the mic sensitivity." 
+		  name="Microphone control">
+      <seekBar  description="" 
+		name="Microphone level general"
+                action="generic /sys/class/misc/scoobydoo_sound/mic_level_general" 
+                unit="" min="0" reversed="false" step="1" max="31"/>
+
+      <seekBar  description="" 
+		name="Microphone level during active camera"
+                action="generic /sys/class/misc/scoobydoo_sound/mic_level_camera" 
+                unit="" min="0" reversed="false" step="1" max="31"/>
+
+      <seekBar  description="" 
+		name="Microphone level in-call"
+                action="generic /sys/class/misc/scoobydoo_sound/mic_level_call"
+                unit="" min="0" reversed="false" step="1" max="31"/>
+    </settingsPane>
+  </settingsTab>  
+
   <settingsTab name="Wolfson Engine">
  
     <settingsPane description="Speaker Tuning Settings" name="Speaker Tuning">

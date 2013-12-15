@@ -375,6 +375,8 @@ esac;
 
 ### Sound engine initialization ###
 
+if [ "$soundengine" == "wolfson" ];then
+
   echo 0 > /sys/class/misc/scoobydoo_sound_control/enable
   echo 1 > /sys/class/misc/wolfson_control/switch_master
   
@@ -505,3 +507,123 @@ fi
 fi
 
     echo "$switch_eq_headphone" > /sys/class/misc/wolfson_control/switch_eq_headphone
+
+else
+
+if [ "$soundengine" == "scoobydoo" ];then
+
+  echo "1" > /sys/class/misc/scoobydoo_sound_control/enable
+  echo "0" > /sys/class/misc/wolfson_control/switch_master
+  
+    echo $speaker_tuning > /sys/class/misc/scoobydoo_sound/speaker_tuning
+    echo $speaker_offset > /sys/class/misc/scoobydoo_sound/speaker_offset
+    echo $privacy_mode > /sys/class/misc/scoobydoo_sound/privacy_mode
+    echo $headphone_amplifier_level > /sys/class/misc/scoobydoo_sound/headphone_amplifier_level
+    echo $headphone_balance > /sys/class/misc/scoobydoo_sound/headphone_balance
+    echo $stereo_expansion > /sys/class/misc/scoobydoo_sound/stereo_expansion
+    echo $stereo_expansion_gain > /sys/class/misc/scoobydoo_sound/stereo_expansion_gain
+    echo $fll_tuning > /sys/class/misc/scoobydoo_sound/fll_tuning
+    echo $dac_osr128 > /sys/class/misc/scoobydoo_sound/dac_osr128
+    echo $dac_direct > /sys/class/misc/scoobydoo_sound/dac_direct
+    echo $mono_downmix > /sys/class/misc/scoobydoo_sound/mono_downmix
+    echo $mic_level_general > /sys/class/misc/scoobydoo_sound/mic_level_general
+    echo $mic_level_camera > /sys/class/misc/scoobydoo_sound/mic_level_camera
+    echo $mic_level_call > /sys/class/misc/scoobydoo_sound/mic_level_call
+
+echo -${digital_gain}000 > /sys/class/misc/scoobydoo_sound/digital_gain
+#echo 1 A 0x0FBB > /sys/class/misc/scoobydoo_sound/headphone_eq_bands_values
+#echo 1 B 0x0407 > /sys/class/misc/scoobydoo_sound/headphone_eq_bands_values
+#echo 1 PG 0x0114 > /sys/class/misc/scoobydoo_sound/headphone_eq_bands_values
+#echo 2 A 0x1F8C > /sys/class/misc/scoobydoo_sound/headphone_eq_bands_values
+#echo 2 B 0xF073 > /sys/class/misc/scoobydoo_sound/headphone_eq_bands_values
+#echo 2 C 0x040A > /sys/class/misc/scoobydoo_sound/headphone_eq_bands_values
+#echo 2 PG 0x01C8 > /sys/class/misc/scoobydoo_sound/headphone_eq_bands_values
+
+if [ "$eq_selection" != "0" ];then
+
+    echo $eq_band1 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo $eq_band2 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo $eq_band3 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo $eq_band4 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo $eq_band5 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    
+else
+
+case "$eq_preset" in
+  0)
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    ;;
+  1)
+    echo 12 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo 8 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo 3 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo -1 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    ;;
+  2)
+    echo 10 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo 7 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo 2 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo 5 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    ;;
+  3)
+    echo -5 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo 4 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo 3 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    ;;
+  4)
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo 0 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo -3 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo -5 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    ;;
+  5)
+    echo 8 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo 3 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo -2 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo 3 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo 8 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    ;;
+  6)
+    echo 12 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo 8 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo 4 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo 2 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo 3 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    ;;
+  7)
+    echo 10 > /sys/class/misc/scoobydoo_sound/headphone_eq_b1_gain
+    echo 2 > /sys/class/misc/scoobydoo_sound/headphone_eq_b2_gain
+    echo -1 > /sys/class/misc/scoobydoo_sound/headphone_eq_b3_gain
+    echo 2 > /sys/class/misc/scoobydoo_sound/headphone_eq_b4_gain
+    echo 10 > /sys/class/misc/scoobydoo_sound/headphone_eq_b5_gain
+    echo 1 > /sys/class/misc/scoobydoo_sound/headphone_eq
+    ;;
+esac;
+fi
+
+else
+
+  echo "0" > /sys/class/misc/scoobydoo_sound_control/enable
+  echo "0" > /sys/class/misc/wolfson_control/switch_master
+
+fi
+
+fi
