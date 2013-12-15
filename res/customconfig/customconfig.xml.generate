@@ -45,9 +45,7 @@ cat << ENDCONFIG
              <spinnerItem name="zzmoove-balanced" value="3"/> 
              <spinnerItem name="zzmoove-performance" value="4"/> 
              <spinnerItem name="zzmoove-custom" value="5"/> 
-             <spinnerItem name="ondemand" value="6"/> 
-             <spinnerItem name="smartassV2" value="7"/> 
-             <spinnerItem name="pegasusq stock" value="8"/> 
+             <spinnerItem name="pegasusq stock" value="6"/> 
        </spinner>
       <spinner description="Set the maximum freqency the CPU scales up to. Default: 1400 MHz." 
                name="CPU max frequency" 

@@ -124,7 +124,7 @@ if [ "$custombootanim" == "on" ];then
 /sbin/bootanimation.sh
 fi
 
-/sbin/tinyplay /sbin/silence.wav -D 0 -d 0 -p 880 &
+/sbin/tinyplay /sbin/silence.wav -D 0 -d 0 -p 880
 
 # Activate fast charge
 echo 2 > /sys/kernel/fast_charge/force_fast_charge
@@ -363,12 +363,6 @@ case "$default_governor" in
         echo $zzmoove_freq_limit_sleep > /sys/devices/system/cpu/cpufreq/zzmoove/freq_limit_sleep
     ;;
   6)  
-        echo "ondemand" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    ;;
-  7)  
-        echo "smartassV2" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
-    ;;
-  8)  
         echo "pegasusqstock" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     ;;
 esac;
