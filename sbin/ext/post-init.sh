@@ -138,6 +138,23 @@ export CONFIG_BOOTING=
 ##### init scripts #####
 /sbin/busybox sh /sbin/ext/run-init-scripts.sh
 
+##### ABB settings #####
+
+echo $arm_slice_1_volt > /sys/devices/system/abb/arm/arm_slice_1_volt
+echo $arm_slice_2_volt > /sys/devices/system/abb/arm/arm_slice_2_volt
+echo $arm_slice_3_volt > /sys/devices/system/abb/arm/arm_slice_3_volt
+echo $arm_slice_4_volt > /sys/devices/system/abb/arm/arm_slice_4_volt
+
+echo $g3d_slice_1_volt > /sys/devices/system/abb/g3d/g3d_slice_1_volt
+echo $g3d_slice_2_volt > /sys/devices/system/abb/g3d/g3d_slice_2_volt
+echo $g3d_slice_3_volt > /sys/devices/system/abb/g3d/g3d_slice_3_volt
+
+echo $mif_slice_1_volt > /sys/devices/system/abb/mif/mif_slice_1_volt
+echo $mif_slice_2_volt > /sys/devices/system/abb/mif/mif_slice_2_volt
+
+echo $int_slice_1_volt > /sys/devices/system/abb/int/int_slice_1_volt
+echo $int_slice_2_volt > /sys/devices/system/abb/int/int_slice_2_volt
+
 ##### CPU settings #####
 
 case "$default_governor" in

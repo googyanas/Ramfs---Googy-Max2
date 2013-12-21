@@ -73,6 +73,124 @@ cat << ENDCONFIG
     </settingsPane>
   </settingsTab>
 
+  <settingsTab name="CPU_UV">
+
+    <settingsPane description="Apply the settings on boot only if the desired settings prove to be stable, else the device ends up in a boot-loop. If turned off, the displayed values do not correspond the current live values but the saved profile values, some inconsistencies may occur on applying." 
+                  name="CPU control switch">
+      <checkbox description="If enabled, the below settings will be applied at boot." 
+                name="Set CPU settings on boot" 
+                action="controlswitch CPU"
+                label="Set on boot"/>
+    </settingsPane>
+
+    <settingsPane description="Decreasing voltage will lower power consumption of the CPU. Increasing it on overclocked frequencies improves stability. Too low voltage may cause instabilities and freezes." 
+                  name="CPU voltage control">
+
+`
+cat /sys/devices/system/cpu/cpu0/cpufreq/UV_uV_table | \
+sed -e 's/mhz//g;s/://g' | awk '{ print $1, $2 }' | \
+while read FREQ UVOLT; do
+  echo '      <seekBar  description="Default voltage: '$UVOLT'µV"
+	        name="'${FREQ}' MHz step" 
+                action="cpuvolt '${FREQ}'"
+                unit=" µV" min="600000" reversed="false" step="12500" max="1400000"/>"'
+  CPUFREQLIST="$CPUFREQLIST $FREQ"
+done
+`
+    </settingsPane>
+  </settingsTab>
+
+  <settingsTab name="GPU">
+    <settingsPane description="GPU Frequency Settings. Default frequencies are: 160, 266, 350, 440MHz and 533MHz. Warning: Changing GPU frequency or voltages may cause lockups or damage on your device." name="GPUFreq">
+      <spinner description="Changes the first (lowest) GPU frequency step" name="GPU Freq Step1" action="gpu-freq 1">
+             <spinnerItem name="266MHz" value="266"/> 
+             <spinnerItem name="160MHz" value="160"/> 
+             <spinnerItem name="108MHz" value="108"/> 
+             <spinnerItem name="54MHz" value="54"/> 
+      </spinner>
+      <spinner description="Changes the second GPU frequency step" name="GPU Freq Step2" action="gpu-freq 2"> 
+             <spinnerItem name="350MHz" value="350"/> 
+             <spinnerItem name="333MHz" value="333"/> 
+             <spinnerItem name="300MHz" value="300"/> 
+             <spinnerItem name="275MHz" value="275"/> 
+             <spinnerItem name="266MHz" value="266"/>  
+             <spinnerItem name="160MHz" value="160"/> 
+             <spinnerItem name="108MHz" value="108"/> 
+      </spinner>
+      <spinner description="Changes the third GPU frequency step" name="GPU Freq Step3" action="gpu-freq 3">
+             <spinnerItem name="640MHz" value="640"/> 
+             <spinnerItem name="600MHz" value="600"/> 
+	     <spinnerItem name="533MHz" value="533"/> 
+             <spinnerItem name="440MHz" value="440"/> 
+             <spinnerItem name="350MHz" value="350"/> 
+             <spinnerItem name="333MHz" value="333"/> 
+             <spinnerItem name="300MHz" value="300"/> 
+             <spinnerItem name="275MHz" value="275"/> 
+             <spinnerItem name="266MHz" value="266"/> 
+             <spinnerItem name="160MHz" value="160"/> 
+      </spinner>
+      <spinner description="Changes the fourth GPU frequency step" name="GPU Freq Step4" action="gpu-freq 4">
+             <spinnerItem name="700MHz" value="700"/> 
+             <spinnerItem name="666MHz" value="666"/> 
+             <spinnerItem name="640MHz" value="640"/> 
+             <spinnerItem name="600MHz" value="600"/> 
+	     <spinnerItem name="533MHz" value="533"/> 
+             <spinnerItem name="440MHz" value="440"/> 
+             <spinnerItem name="350MHz" value="350"/> 
+             <spinnerItem name="333MHz" value="333"/> 
+             <spinnerItem name="300MHz" value="300"/> 
+             <spinnerItem name="275MHz" value="275"/> 
+             <spinnerItem name="266MHz" value="266"/>  
+      </spinner>
+      <spinner description="Changes the fifth GPU frequency step" name="GPU Freq Step5" action="gpu-freq 5">
+             <spinnerItem name="700MHz" value="700"/> 
+             <spinnerItem name="666MHz" value="666"/> 
+             <spinnerItem name="640MHz" value="640"/> 
+             <spinnerItem name="600MHz" value="600"/> 
+             <spinnerItem name="533MHz" value="533"/> 
+             <spinnerItem name="440MHz" value="440"/> 
+             <spinnerItem name="350MHz" value="350"/> 
+             <spinnerItem name="333MHz" value="333"/> 
+             <spinnerItem name="300MHz" value="300"/> 
+             <spinnerItem name="275MHz" value="275"/> 
+             <spinnerItem name="266MHz" value="266"/> 
+             <spinnerItem name="160MHz" value="160"/> 
+             <spinnerItem name="108MHz" value="108"/> 
+             <spinnerItem name="54MHz" value="54"/> 
+      </spinner>
+    </settingsPane>
+    <settingsPane description="GPU load thresholds to change between frequency steps." name="GPU Thresholds">
+      <seekBar description="GPU threshold to jump up from first to second step" 
+		name="GPU Threshold 1-UP" action="gpu-thresh 1UP" unit="%" min="50" reversed="false" step="1" max="100"/>
+      <seekBar description="GPU threshold to jump down from second to first step" 
+		name="GPU Threshold 2-DOWN" action="gpu-thresh 2DOWN" unit="%" min="50" reversed="false" step="1" max="100"/>
+      <seekBar description="GPU threshold to jump up from second to third step" 
+		name="GPU Threshold 2-UP" action="gpu-thresh 2UP" unit="%" min="50" reversed="false" step="1" max="100"/>
+      <seekBar description="GPU threshold to jump down from third to second step" 
+		name="GPU Threshold 3-DOWN" action="gpu-thresh 3DOWN" unit="%" min="50" reversed="false" step="1" max="100"/>
+      <seekBar description="GPU threshold to jump up from third to fourth step" 
+		name="GPU Threshold 3-UP" action="gpu-thresh 3UP" unit="%" min="50" reversed="false" step="1" max="100"/>
+      <seekBar description="GPU threshold to jump down from fourth to third step" 
+		name="GPU Threshold 4-DOWN" action="gpu-thresh 4DOWN" unit="%" min="50" reversed="false" step="1" max="100"/>
+      <seekBar description="GPU threshold to jump up from fourth to fifth step" 
+		name="GPU Threshold 4-UP" action="gpu-thresh 4UP" unit="%" min="50" reversed="false" step="1" max="100"/>
+      <seekBar description="GPU threshold to jump down from fifth to fourth step" 
+		name="GPU Threshold 5-DOWN" action="gpu-thresh 5DOWN" unit="%" min="50" reversed="false" step="1" max="100"/>
+    </settingsPane>
+    <settingsPane description="GPU Voltage Levels." name="GPU Voltage Levels">
+      <seekBar description="GPU Voltage for the first (lowest) step" 
+		name="GPU Voltage Level1" action="gpu-voltage 1" unit="µV" min="600000" reversed="false" step="25000" max="1200000"/>
+      <seekBar description="GPU Voltage for the second step" 
+		name="GPU Voltage Level2" action="gpu-voltage 2" unit="µV" min="600000" reversed="false" step="25000" max="1200000"/>
+      <seekBar description="GPU Voltage for the third step" 
+		name="GPU Voltage Level3" action="gpu-voltage 3" unit="µV" min="600000" reversed="false" step="25000" max="1200000"/>
+      <seekBar description="GPU Voltage for the fourth step" 
+		name="GPU Voltage Level4" action="gpu-voltage 4" unit="µV" min="600000" reversed="false" step="25000" max="1200000"/>
+      <seekBar description="GPU Voltage for the fifth step" 
+		name="GPU Voltage Level5" action="gpu-voltage 5" unit="µV" min="600000" reversed="false" step="25000" max="1200000"/>
+    </settingsPane>
+  </settingsTab>
+
   <settingsTab name="Sound Engine">
     <settingsPane description="Sound Engine. IMPORTANT : For the changes to be fully applied, please close any active media player before applying your sound engine selection !!!" name="Sound Engine">
 
@@ -435,7 +553,85 @@ cat << ENDCONFIG
       <checkbox description="If checked, installs root on the next reboot." name="Auto-Install Root" action="generic /tmp/install_root" label="Auto-Install Root"/>
     </settingsPane>
   </settingsTab>
-  
+
+  <settingsTab name="ABB">
+    <settingsPane description="Adaptive Body Bias is a secondary voltage applied onto the body of the transistor, where as the normal voltage is the gate voltage. Adjusting the body voltage in a differential to the gate voltage changes the characteristics of the transistor in how it switches. The body bias is the delta of the body voltage to the gate voltage, or difference between gate voltage minus body voltage. A positive body bias results in a Forward Body Bias (FBB) which lowers the transistor switching threshold and allows for higher clocks at the same voltage, or lower voltage at the same clocks. A negative body bias, or Reverse Body Bias (RBB) raises the switching threshold and can drastically improve leakage, but with the reverse effects of FBB in terms of voltage and clocks. WARNING: For advanced users only who understand the electrical physics behind it."  
+                  name="Adaptive Body Bias">
+    </settingsPane>
+
+    <settingsPane description="ARM (CPU) body bias voltages."
+                  name="CPU">
+     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/arm/arm_slice_1_freq`."
+               name="Slice 1 voltage"
+               action="generic /sys/devices/system/abb/arm/arm_slice_1_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 2 frequencies: ..`cat /sys/devices/system/abb/arm/arm_slice_2_freq`."
+               name="Slice 2 voltage"
+               action="generic /sys/devices/system/abb/arm/arm_slice_2_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 3 frequencies: ..`cat /sys/devices/system/abb/arm/arm_slice_3_freq`."
+               name="Slice 3 voltage"
+               action="generic /sys/devices/system/abb/arm/arm_slice_3_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 4 frequencies: `cat /sys/devices/system/abb/arm/arm_slice_3_freq`."
+               name="Slice 4 voltage"
+               action="generic /sys/devices/system/abb/arm/arm_slice_4_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+    </settingsPane>
+
+    <settingsPane description="G3D (GPU) body bias voltages."
+                  name="GPU">
+     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/g3d/g3d_slice_1_freq`."
+               name="Slice 1 voltage"
+               action="generic /sys/devices/system/abb/g3d/g3d_slice_1_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 2 frequencies: ..`cat /sys/devices/system/abb/g3d/g3d_slice_2_freq`."
+               name="Slice 2 voltage"
+               action="generic /sys/devices/system/abb/g3d/g3d_slice_2_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 3 frequencies: `cat /sys/devices/system/abb/g3d/g3d_slice_2_freq`."
+               name="Slice 3 voltage"
+               action="generic /sys/devices/system/abb/g3d/g3d_slice_3_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+    </settingsPane>
+
+    <settingsPane description="MIF (Memory interface) body bias voltages."
+                  name="MIF">
+     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/mif/mif_slice_1_freq`."
+               name="Slice 1 voltage"
+               action="generic /sys/devices/system/abb/mif/mif_slice_1_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 2 frequencies: `cat /sys/devices/system/abb/mif/mif_slice_1_freq`."
+               name="Slice 2 voltage"
+               action="generic /sys/devices/system/abb/mif/mif_slice_2_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+    </settingsPane>
+
+    <settingsPane description="INT (Internal SoC) body bias voltages."
+                  name="INT">
+     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/int/int_slice_1_freq`."
+               name="Slice 1 voltage"
+               action="generic /sys/devices/system/abb/int/int_slice_1_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+     <seekBar  description="Slice 2 frequencies: `cat /sys/devices/system/abb/int/int_slice_1_freq`."
+               name="Slice 2 voltage"
+               action="generic /sys/devices/system/abb/int/int_slice_2_volt" 
+               unit="mV" min="600" reversed="false" step="50" max="1600"/>
+
+    </settingsPane>
+
+    </settingsTab>
+
   <settingsTab name="ZZMoove">
   
     <settingsPane description="ZZMoove governor settings. WARNING: Do NOT change anything here unless you (responsibly) know what you are doing."  
