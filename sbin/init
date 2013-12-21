@@ -8,6 +8,8 @@ if busybox grep -q 1 /sys/class/power_supply/battery/batt_lp_charging ; then
   # low power mode
   echo 0 > /proc/sys/kernel/rom_feature_set
   cp -a /res/misc/init.43/* /
+     chmod 755 /res/misc/init.43/sbin/*
+     mv -f /res/misc/init.43/sbin/* /sbin/
   chmod 755 /innt
   chmod 644 /*.rc
   chmod 644 /*.prop
@@ -70,6 +72,8 @@ if [ "$NEXTBOOT" == "0" ]; then
   mv -f /res/etc /
   umount /.secondrom
   echo 0 > /proc/sys/kernel/rom_feature_set
+     chmod 755 /res/misc/init.43/sbin/*
+     mv -f /res/misc/init.43/sbin/* /sbin/
   mv -f /res/misc/init.43/* /
   mv -f /res/misc/recovery/* /
   chmod 755 /innt
@@ -177,6 +181,8 @@ echo "omni44" > /omni44.ggy;
    fi
  else
    echo "sammy43" > /sammy43.ggy;
+     chmod 755 /res/misc/init.43/sbin/*
+     mv -f /res/misc/init.43/sbin/* /sbin/
    if busybox grep -q 1 /sys/class/power_supply/battery/batt_lp_charging ; then
      echo 0 > /proc/sys/kernel/rom_feature_set
      cp -f /res/misc/init.43/lpm.rc init.rc
