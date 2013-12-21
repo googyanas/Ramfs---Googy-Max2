@@ -3,7 +3,6 @@ import init.smdk4x12.usb.rc
 
 on init
     chmod 0701 /mnt/media_rw
-    chown root root /mnt/media_rw
     mkdir /mnt/shell/emulated 0700 shell shell
     mkdir /storage 0550 system sdcard_r
     mkdir /storage/emulated 0555 root root
@@ -131,8 +130,8 @@ on post-fs-data
 # Vibrator
     chmod 0660 /dev/tspdrv
     chown root shell /dev/tspdrv
-    chmod 0660 /sys/vibrator/pwm_val
-    chown system system /sys/vibrator/pwm_val
+    chmod 0660 /sys/class/timed_output/vibrator/pwm_value
+    chown system system /sys/class/timed_output/vibrator/pwm_value
 
 # LED
     chmod 0660 /sys/class/sec/led/led_fade
