@@ -473,6 +473,16 @@ done
 
   <settingsTab name="Screen">
     <settingsPane description="Other screen related settings" name="Other Settings">
+        <spinner description="Set CPU freq boost level when you touch the screen. Lower levels will help with the battery with the cost of UI lags" name="Touch Boost Level" action="generic /sys/class/misc/m0mods/touch_boost_level">
+             <spinnerItem name="1200MHz" value="4"/> 
+             <spinnerItem name="1000MHz" value="6"/> 
+             <spinnerItem name="900MHz" value="7"/> 
+             <spinnerItem name="800MHz" value="8"/> 
+             <spinnerItem name="700MHz" value="9"/> 
+             <spinnerItem name="600MHz" value="10"/> 
+             <spinnerItem name="500MHz" value="11"/> 
+             <spinnerItem name="Disabled (Default)" value="14"/> 
+       </spinner>
               <seekBar description="FB earlysuspend delay to run CRT animation when you turn the screen off." 
 		name="FB Earlysuspend Delay" action="generic /sys/power/fbearlysuspend_delay" unit=" ms" min="0" reversed="false" step="100" max="1000"/>
             </settingsPane>
@@ -500,6 +510,7 @@ done
              <spinnerItem name="sio" value="sio"/> 
              <spinnerItem name="vr" value="vr"/> 
              <spinnerItem name="fifo" value="fifo"/> 
+             <spinnerItem name="zen" value="zen"/> 
       </spinner>
       <seekBar  description="The read-ahead value for the internal storage." 
                 name="Internal storage read-ahead" 
@@ -514,6 +525,7 @@ done
              <spinnerItem name="sio" value="sio"/> 
              <spinnerItem name="vr" value="vr"/> 
              <spinnerItem name="fifo" value="fifo"/> 
+             <spinnerItem name="zen" value="zen"/> 
       </spinner>
 
       <seekBar  description="The read-ahead value for the external storage (SD-Card)." 
@@ -524,6 +536,14 @@ done
       
                 unit="" min="0" reversed="false" step="10" max="100"/>
     </settingsPane>
+    
+    <settingsPane description="Vibration intensity control" name="Vibration intensity">
+      <seekBar  description="Vibration intensity control for Temasek's ROM (or any ROM with cm10.2 way of controlling vibration intensity)" 
+                name="Vibration intensity" 
+                action="generic /sys/vibrator/pwm_val"
+                unit="" min="0" reversed="false" step="10" max="100"/>
+    </settingsPane>
+
 
     <settingsPane description="Charge currents" name="Charge currents">
       <seekBar description="AC,CDP,Dock charge currents (default 1000). WARNING: Any setting above 1000mA is very risky for your phone" 
@@ -553,84 +573,6 @@ done
       <checkbox description="If checked, installs root on the next reboot." name="Auto-Install Root" action="generic /tmp/install_root" label="Auto-Install Root"/>
     </settingsPane>
   </settingsTab>
-
-  <settingsTab name="ABB">
-    <settingsPane description="Adaptive Body Bias is a secondary voltage applied onto the body of the transistor, where as the normal voltage is the gate voltage. Adjusting the body voltage in a differential to the gate voltage changes the characteristics of the transistor in how it switches. The body bias is the delta of the body voltage to the gate voltage, or difference between gate voltage minus body voltage. A positive body bias results in a Forward Body Bias (FBB) which lowers the transistor switching threshold and allows for higher clocks at the same voltage, or lower voltage at the same clocks. A negative body bias, or Reverse Body Bias (RBB) raises the switching threshold and can drastically improve leakage, but with the reverse effects of FBB in terms of voltage and clocks. WARNING: For advanced users only who understand the electrical physics behind it."  
-                  name="Adaptive Body Bias">
-    </settingsPane>
-
-    <settingsPane description="ARM (CPU) body bias voltages."
-                  name="CPU">
-     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/arm/arm_slice_1_freq`."
-               name="Slice 1 voltage"
-               action="generic /sys/devices/system/abb/arm/arm_slice_1_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-     <seekBar  description="Slice 2 frequencies: ..`cat /sys/devices/system/abb/arm/arm_slice_2_freq`."
-               name="Slice 2 voltage"
-               action="generic /sys/devices/system/abb/arm/arm_slice_2_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-     <seekBar  description="Slice 3 frequencies: ..`cat /sys/devices/system/abb/arm/arm_slice_3_freq`."
-               name="Slice 3 voltage"
-               action="generic /sys/devices/system/abb/arm/arm_slice_3_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-     <seekBar  description="Slice 4 frequencies: `cat /sys/devices/system/abb/arm/arm_slice_3_freq`."
-               name="Slice 4 voltage"
-               action="generic /sys/devices/system/abb/arm/arm_slice_4_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-    </settingsPane>
-
-    <settingsPane description="G3D (GPU) body bias voltages."
-                  name="GPU">
-     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/g3d/g3d_slice_1_freq`."
-               name="Slice 1 voltage"
-               action="generic /sys/devices/system/abb/g3d/g3d_slice_1_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-     <seekBar  description="Slice 2 frequencies: ..`cat /sys/devices/system/abb/g3d/g3d_slice_2_freq`."
-               name="Slice 2 voltage"
-               action="generic /sys/devices/system/abb/g3d/g3d_slice_2_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-     <seekBar  description="Slice 3 frequencies: `cat /sys/devices/system/abb/g3d/g3d_slice_2_freq`."
-               name="Slice 3 voltage"
-               action="generic /sys/devices/system/abb/g3d/g3d_slice_3_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-    </settingsPane>
-
-    <settingsPane description="MIF (Memory interface) body bias voltages."
-                  name="MIF">
-     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/mif/mif_slice_1_freq`."
-               name="Slice 1 voltage"
-               action="generic /sys/devices/system/abb/mif/mif_slice_1_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-     <seekBar  description="Slice 2 frequencies: `cat /sys/devices/system/abb/mif/mif_slice_1_freq`."
-               name="Slice 2 voltage"
-               action="generic /sys/devices/system/abb/mif/mif_slice_2_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-    </settingsPane>
-
-    <settingsPane description="INT (Internal SoC) body bias voltages."
-                  name="INT">
-     <seekBar  description="Slice 1 frequencies: ..`cat /sys/devices/system/abb/int/int_slice_1_freq`."
-               name="Slice 1 voltage"
-               action="generic /sys/devices/system/abb/int/int_slice_1_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-     <seekBar  description="Slice 2 frequencies: `cat /sys/devices/system/abb/int/int_slice_1_freq`."
-               name="Slice 2 voltage"
-               action="generic /sys/devices/system/abb/int/int_slice_2_volt" 
-               unit="mV" min="600" reversed="false" step="50" max="1600"/>
-
-    </settingsPane>
-
-    </settingsTab>
 
   <settingsTab name="ZZMoove">
   
