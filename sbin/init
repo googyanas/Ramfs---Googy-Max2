@@ -169,6 +169,8 @@ else
  if [ "$OMNI44" == 1 ];
 then
 echo "omni44" > /omni44.ggy;
+     chmod 755 /res/misc/init.omni44/sbin/*
+     mv -f /res/misc/init.omni44/sbin/* /sbin/
    if busybox grep -q 1 /sys/class/power_supply/battery/batt_lp_charging ; then
      echo 0 > /proc/sys/kernel/rom_feature_set
      cp -f /res/misc/init.omni44/lpm.rc init.rc
