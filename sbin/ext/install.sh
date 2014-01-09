@@ -60,9 +60,11 @@ then
   fi
 fi;
 
-if [ ! -f /system/app/STweaks_Googy-Max.apk ];then
+if [ ! -f /data/app/STweaks_Googy-Max.apk ] && [ ! -f /data/app/STweaks.apk ] ;then
   rm -f /system/app/STweaks.apk
   rm -f /system/app/STweaks_Googy-Max.apk
+  rm -f /data/app/STweaks.apk
+  rm -f /data/app/STweaks_Googy-Max.apk
   rm -f /data/app/com.gokhanmoral.STweaks*
   rm -f /data/app/*.STweaks*
   rm -f /data/dalvik-cache/*STweaks*.*
@@ -70,20 +72,12 @@ if [ ! -f /system/app/STweaks_Googy-Max.apk ];then
   rm -f /data/app/*.stweaks*
   rm -f /data/dalvik-cache/*stweaks*
 
-  cat /res/STweaks_Googy-Max.apk > /system/app/STweaks_Googy-Max.apk
-  chown 0.0 /system/app/STweaks_Googy-Max.apk
+  chown 0.0 /res/STweaks_Googy-Max.apk
+  chmod 644 /res/STweaks_Googy-Max.apk
+  cp /res/STweaks_Googy-Max.apk /data/app/STweaks_Googy-Max.apk
+  chown 0.0 /data/app/STweaks_Googy-Max.apk
+  chmod 644 /data/app/STweaks_Googy-Max.apk
   chmod 644 /system/app/STweaks_Googy-Max.apk
-fi
-
-echo "ntfs-3g..."
-if [ ! -s /system/xbin/ntfs-3g ];
-then
-  if [ "$payload_extracted" == "0" ];then
-    extract_payload
-  fi
-  xzcat /res/misc/payload/ntfs-3g.xz > /system/xbin/ntfs-3g
-  chown 0.0 /system/xbin/ntfs-3g
-  chmod 755 /system/xbin/ntfs-3g
 fi
 
 rm -rf /res/misc/payload
