@@ -49,7 +49,7 @@ loglevel 3
     export ANDROID_STORAGE /storage
     export ASEC_MOUNTPOINT /mnt/asec
     export LOOP_MOUNTPOINT /mnt/obb
-    export BOOTCLASSPATH /system/framework/core.jar:/system/framework/core-junit.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/framework2.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/mms-common.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/apache-xml.jar:/system/framework/sec_edm.jar:/system/framework/seccamera.jar:/system/framework/scrollpause.jar:/system/framework/stayrotation.jar:/system/framework/smartfaceservice.jar:/system/framework/sc.jar:/system/framework/secocsp.jar:/system/framework/commonimsinterface.jar:/system/framework/framework-pac.jar
+    export BOOTCLASSPATH /system/framework/core.jar:/system/framework/core-junit.jar:/system/framework/bouncycastle.jar:/system/framework/ext.jar:/system/framework/framework.jar:/system/framework/framework2.jar:/system/framework/telephony-common.jar:/system/framework/voip-common.jar:/system/framework/mms-common.jar:/system/framework/android.policy.jar:/system/framework/services.jar:/system/framework/apache-xml.jar:/system/framework/sec_edm.jar:/system/framework/seccamera.jar:/system/framework/scrollpause.jar:/system/framework/stayrotation.jar:/system/framework/smartfaceservice.jar:/system/framework/sc.jar:/system/framework/secocsp.jar:/system/framework/commonimsinterface.jar:/system/framework/framework-pac.jar:/system/framework/framework-2.jar
 # for audit message 
     chown system system /proc/avc_msg
     chmod 0660 /proc/avc_msg
@@ -976,7 +976,7 @@ service drs /system/bin/drs
 on property:persist.sys.drs.enforce=1
 	restorecon -r /data
 	start drs
-	setenforce 1 
+	setenforce 0 
 	
 on property:persist.sys.drs.enforce=0
 	start auditd
