@@ -4,7 +4,7 @@ if [ "a$3" == "a" ];then
   evalcmd='eval "echo \$GPUVOLT$2"'
   if [ "a`eval $evalcmd`" == "a" ];then
     j=1
-    for i in `cat /sys/class/misc/gpu_control/gpu_voltage_control | awk -F: '{print $2}'`; do 
+    for i in `cat /sys/class/misc/gpu_voltage_control/gpu_control | awk -F: '{print $2}'`; do 
       eval GPUVOLT$j=`expr $i / 1`
       j=`expr $j + 1`
     done
@@ -18,11 +18,11 @@ else
   eval $evalcmd
   VOLTAGES=""
   j=1
-  for i in `cat /sys/class/misc/gpu_control/gpu_voltage_control | awk -F: '{print $2}'`;do
+  for i in `cat /sys/class/misc/gpu_voltage_control/gpu_control | awk -F: '{print $2}'`;do
     evalcmd='eval echo \$GPUVOLT$j'
     VOLTAGES="$VOLTAGES `eval $evalcmd`"
     j=`expr $j + 1`
   done
-  echo $VOLTAGES > /sys/class/misc/gpu_control/gpu_voltage_control
+  echo $VOLTAGES > /sys/class/misc/gpu_voltage_control/gpu_control
 fi
 

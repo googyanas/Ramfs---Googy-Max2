@@ -15,6 +15,7 @@ cat << ENDCONFIG
              <spinnerItem name="AFTR only" value="1"/> 
              <spinnerItem name="Idle only" value="0"/> 
       </spinner>
+
       <seekBar description="Sets the sched_mc value which changes the cpu scheduler behaviour for multi-cpu systems. 0 is kernel's default value which turns sched_mc off. Setting it to 1 means that the first core will be tried to be loaded more and setting it to 2 will bias task wake-ups to semi-idle cpu package for power savings. (default: 0)"
             name="sched_mc" action="generic /sys/devices/system/cpu/sched_mc_power_savings" unit="" min="0" reversed="false" step="1" max="2"/>
      </settingsPane>
@@ -32,7 +33,13 @@ cat << ENDCONFIG
 
     <settingsPane description=""
 		name="CPU Scaling Settings">
-       <spinner description="Sets the number of CPUs to be used in hotplugging. Only effective for pegasusq governor." name="Max CPU Lock" action="max-cpu-lock">
+       <spinner description="Sets the minimum number of CPUs to be used in hotplugging. Only effective for pegasusq and lulzactiveq governors." name="Min CPU Lock" action="min-cpu-lock">
+             <spinnerItem name="Quad core mode (unlocked,default)" value="0"/> 
+             <spinnerItem name="Triple core mode" value="3"/> 
+             <spinnerItem name="Dual core mode" value="2"/> 
+             <spinnerItem name="Single core mode" value="1"/> 
+       </spinner>
+       <spinner description="Sets the maximum number of CPUs to be used in hotplugging. Only effective for pegasusq and lulzactiveq governors." name="Max CPU Lock" action="max-cpu-lock">
              <spinnerItem name="Quad core mode (unlocked,default)" value="0"/> 
              <spinnerItem name="Triple core mode" value="3"/> 
              <spinnerItem name="Dual core mode" value="2"/> 
@@ -45,7 +52,7 @@ cat << ENDCONFIG
              <spinnerItem name="zzmoove-balanced" value="3"/> 
              <spinnerItem name="zzmoove-performance" value="4"/> 
              <spinnerItem name="zzmoove-custom" value="5"/> 
-             <spinnerItem name="pegasusq stock" value="6"/> 
+             <spinnerItem name="smartassV2" value="6"/> 
        </spinner>
       <spinner description="Set the maximum freqency the CPU scales up to. Default: 1400 MHz." 
                name="CPU max frequency" 
@@ -176,6 +183,7 @@ done
       <seekBar description="GPU threshold to jump down from fifth to fourth step" 
 		name="GPU Threshold 5-DOWN" action="gpu-thresh 5DOWN" unit="%" min="50" reversed="false" step="1" max="100"/>
     </settingsPane>
+    
     <settingsPane description="GPU Voltage Levels." name="GPU Voltage Levels">
       <seekBar description="GPU Voltage for the first (lowest) step" 
 		name="GPU Voltage Level1" action="gpu-voltage 1" unit="µV" min="600000" reversed="false" step="25000" max="1200000"/>
@@ -814,9 +822,14 @@ done
   <settingsTab name="Misc">
     <settingsPane description="Misc Settings" name="Misc Settings">
       <checkbox description="Enable or Disable Android Logger (needs reboot)" name="Android Logger" action="generic01 /tmp/logger" label="Android Logger"/>      
+
+      <checkbox description="Dynamic Fsync switch" name="Dynamic Fsync switch" action="generic01 /sys/kernel/dyn_fsync/Dyn_fsync_active" label="Dynamic Fsync"/>      
+      
+      <checkbox description="Enable or Disable ZRAM for Sammy ROM (needs reboot)" name="Sammy ZRAM" action="generic01 /tmp/sammyzram" label="Sammy ZRAM"/>      
           
       <spinner description="This will set the default I/O scheduler for Internal Storage" name="Default I/O Scheduler for Internal Storage" action="iosched_int /tmp/int_scheduler">
              <spinnerItem name="cfq" value="cfq"/>
+             <spinnerItem name="bfq" value="bfq"/>
              <spinnerItem name="row" value="row"/>
              <spinnerItem name="noop" value="noop"/> 
              <spinnerItem name="deadline" value="deadline"/> 
@@ -832,6 +845,7 @@ done
 
 <spinner description="This will set the default I/O scheduler for the external Storage (SD-Card)" name="Default I/O Scheduler for SD-Card Storage" action="iosched_ext /tmp/ext_scheduler">
              <spinnerItem name="cfq" value="cfq"/>
+             <spinnerItem name="bfq" value="bfq"/>
              <spinnerItem name="row" value="row"/> 
              <spinnerItem name="noop" value="noop"/> 
              <spinnerItem name="deadline" value="deadline"/> 
@@ -845,9 +859,9 @@ done
                 name="SD card read-ahead" 
                 action="readahead_ext /tmp/ext_read_ahead_kb"
                 unit="kB" min="128" reversed="false" step="128" max="2048"/>
+                
       <button description="Apply IO-Scheduler settings." name="Set IO-Schedulers" action="ioschedapply" label="Set IO-Schedulers"/>
       
-                unit="" min="0" reversed="false" step="10" max="100"/>
     </settingsPane>
     
     <settingsPane description="Vibration intensity control" name="Vibration intensity">
@@ -860,11 +874,13 @@ done
 
     <settingsPane description="Charge currents" name="Charge currents">
       <seekBar description="AC,CDP,Dock charge currents (default 1000). WARNING: Any setting above 1000mA is very risky for your phone" 
-		name="AC Charge" action="generic /sys/kernel/fast_charge/ac_charge_level" unit="mA" min="800" reversed="false" step="100" max="1500"/>
+		name="AC Charge" action="generic /sys/kernel/charge_levels/charge_level_ac" unit="mA" min="800" reversed="false" step="100" max="1500"/>
       <seekBar description="USB charge current (default 475)" 
-		name="USB Charge" action="generic /sys/kernel/fast_charge/usb_charge_level" unit="mA" min="475" reversed="false" step="25" max="1100"/>
+		name="USB Charge" action="generic /sys/kernel/charge_levels/charge_level_usb" unit="mA" min="475" reversed="false" step="25" max="1100"/>
       <seekBar description="Wireless charge current (default 475)" 
-		name="Wireless Charge" action="generic /sys/kernel/fast_charge/wireless_charge_level" unit="mA" min="475" reversed="false" step="25" max="1100"/>
+		name="Wireless Charge" action="generic /sys/kernel/charge_levels/charge_level_wireless" unit="mA" min="475" reversed="false" step="25" max="1100"/>
+      <checkbox description="Ignore unstable power" name="Ignore unstable power" action="generic01 /sys/kernel/charge_levels/ignore_unstable_power" label="Ignore unstable power"/>      
+      <checkbox description="Ignore safety margin" name="Ignore safety margin" action="generic01 /sys/kernel/charge_levels/ignore_safety_margin" label="Ignore safety margin"/>      
     </settingsPane>
     
     <settingsPane description="TCP settings" name="TCP settings">
@@ -1113,12 +1129,12 @@ done
                action="generic /tmp/pegasusq_cpu_down_freq" 
                unit="" min="200000" reversed="false" step="100000" max="600000"/>
 
-     <seekBar  description="Cpu up rate (Default=16)"
+     <seekBar  description="Cpu up rate (Default=10)"
                name="cpu_up_rate"
                action="generic /tmp/pegasusq_cpu_up_rate" 
                unit="" min="5" reversed="false" step="1" max="30"/>
                
-     <seekBar  description="Cpu down rate (Default=30)"
+     <seekBar  description="Cpu down rate (Default=20)"
                name="cpu_down_rate"
                action="generic /tmp/pegasusq_cpu_down_rate" 
                unit="" min="10" reversed="false" step="1" max="50"/>
@@ -1127,6 +1143,11 @@ done
                name="down_differential"
                action="generic /tmp/pegasusq_down_differential" 
                unit="" min="2" reversed="false" step="1" max="15"/>
+
+     <seekBar  description="Frequency for responsiveness (Default=400000)"
+               name="Frequency for responsiveness"
+               action="generic /tmp/pegasusq_freq_for_responsiveness" 
+               unit="" min="200000" reversed="false" step="100000" max="1000000"/>
 
      <seekBar  description="Frequency step (Default=37)"
                name="freq_step"
@@ -1141,7 +1162,7 @@ done
      <seekBar  description="Hotplug frequency 2_0 (Default=200000)"
                name="hotplug_freq_2_0"
                action="generic /tmp/pegasusq_hotplug_freq_2_0" 
-               unit="" min="200000" reversed="false" step="100000" max="600000"/>
+               unit="" min="200000" reversed="false" step="100000" max="1200000"/>
 
      <seekBar  description="Hotplug frequency 2_1 (Default=500000)"
                name="hotplug_freq_2_1"
@@ -1151,7 +1172,7 @@ done
      <seekBar  description="Hotplug frequency 3_0 (Default=200000)"
                name="hotplug_freq_3_0"
                action="generic /tmp/pegasusq_hotplug_freq_3_0" 
-               unit="" min="200000" reversed="false" step="100000" max="600000"/>
+               unit="" min="200000" reversed="false" step="100000" max="1200000"/>
 
      <seekBar  description="Hotplug frequency 3_1 (Default=500000)"
                name="hotplug_freq_3_1"
@@ -1161,7 +1182,7 @@ done
      <seekBar  description="Hotplug frequency 4_0 (Default=200000)"
                name="hotplug_freq_4_0"
                action="generic /tmp/pegasusq_hotplug_freq_4_0" 
-               unit="" min="200000" reversed="false" step="100000" max="600000"/>
+               unit="" min="200000" reversed="false" step="100000" max="1200000"/>
 
      <seekBar  description="Hotplug rq 1_1 (Default=100)"
                name="hotplug_rq_1_1"
@@ -1208,7 +1229,7 @@ done
                action="generic /tmp/pegasusq_sampling_down_factor" 
                unit="" min="1" reversed="false" step="1" max="10"/>
 
-     <seekBar  description="Sampling rate (Default=30000)"
+     <seekBar  description="Sampling rate (Default=50000)"
                name="sampling_rate"
                action="generic /tmp/pegasusq_sampling_rate" 
                unit="" min="10000" reversed="false" step="10000" max="80000"/>
@@ -1223,11 +1244,18 @@ done
                action="generic /tmp/pegasusq_up_nr_cpus" 
                unit="" min="1" reversed="false" step="1" max="3"/>
 
-     <seekBar  description="Up threshold (Default=82)"
+     <seekBar  description="Up threshold (Default=85)"
                name="up_threshold"
                action="generic /tmp/pegasusq_up_threshold" 
-               unit="" min="40" reversed="false" step="5" max="95"/>              
-                                          
+               unit="" min="50" reversed="false" step="1" max="95"/> 
+
+     <seekBar  description="Up threshold at min freq (Default=40)"
+               name="up_threshold_at_min_freq"
+               action="generic /tmp/pegasusq_up_threshold_at_min_freq" 
+               unit="" min="30" reversed="false" step="5" max="95"/>              
+ 
+       <button description="Apply PegasusQ settings." name="Apply PegasusQ settings" action="cpugovapply" label="Apply PegasusQ settings"/>
+
  </settingsPane>
    
     </settingsTab>
@@ -1370,6 +1398,8 @@ done
                action="generic /tmp/lulzactiveq_up_nr_cpus" 
                unit="" min="1" reversed="false" step="1" max="3"/>
 
+       <button description="Apply LulzactiveQ settings." name="Apply LulzactiveQ settings" action="cpugovapply" label="Apply LulzactiveQ settings"/>
+
  </settingsPane> 
     </settingsTab>
     
@@ -1403,6 +1433,7 @@ done
       <button description="" name="Balanced" action="saveprofile 1" label="Balanced profile"/>
       <button description="" name="Performance" action="saveprofile 2" label="Performance profile"/>  
     </settingsPane>
+    
   </settingsTab>  
   
 </settingsRoot>
