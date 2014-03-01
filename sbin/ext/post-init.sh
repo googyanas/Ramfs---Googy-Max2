@@ -45,6 +45,11 @@ echo "${int_read_ahead_kb}" > /sys/block/mmcblk0/bdi/read_ahead_kb
 echo "${ext_scheduler}" > /sys/block/mmcblk1/queue/scheduler
 echo "${ext_read_ahead_kb}" > /sys/block/mmcblk1/bdi/read_ahead_kb
 
+##### GGY Sammy ZRAM #####
+
+if [ "$sammyzram" == "on" ];then
+/system/bin/rtccd2 -a 300M
+fi
 
 ##### GGY TouchWake #####
 

@@ -1089,6 +1089,8 @@ done
                action="generic /tmp/zzmoove_freq_limit_sleep" 
                unit="" min="0" reversed="false" step="200" max="1600"/>
                
+       <button description="Apply ZZmoove settings." name="Apply ZZmoove settings" action="cpugovapply" label="Apply ZZmoove settings"/>
+
     </settingsPane>
     
     </settingsTab>

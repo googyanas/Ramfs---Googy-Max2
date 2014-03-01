@@ -268,3 +268,4 @@ s_edge_enhancement=off
 de_positive_e=0
 de_positive_f=0
 de_positive_b=0
+sammyzram=on
