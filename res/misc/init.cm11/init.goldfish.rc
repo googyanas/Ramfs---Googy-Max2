@@ -2,7 +2,7 @@
 on early-init
     mount debugfs debugfs /sys/kernel/debug
 
-# on init
+on init
     # See storage config details at http://source.android.com/tech/storage/
     mkdir /mnt/media_rw/sdcard 0700 media_rw media_rw
     mkdir /storage/sdcard 0700 root root
