@@ -91,7 +91,10 @@ NOBOOTLOGO=0
 
 if [ "$SECONDROM" == "0" ];then
   if [ "$NOBOOTLOGO" == "0" ];then
+    START=$(date +%s);
     /sbin/choose_rom $SECONDROM
+    END=$(date +%s);
+    DIFF=$((END - START))
   fi
 else
   if [ ! -f /.secondrom/media/.secondrom/data/.layout_version ];then
@@ -106,15 +109,23 @@ else
     if [ "$NOBOOTLOGO" == "1" ];then
       SECONDROM=$DEFAULTROM
     elif [ "$DEFAULTROM" == "1" ];then
-      /sbin/choose_rom $SECONDROM
-      if [ "$?" == "1" ]; then
+    LIMIT=4
+    START=$(date +%s);
+    /sbin/choose_rom $SECONDROM
+    END=$(date +%s);
+    DIFF=$((END - START))
+      if [ "$DIFF" -lt "$LIMIT" ]; then
         SECONDROM=0
       else
         SECONDROM=1
       fi
     else
-      /sbin/choose_rom $SECONDROM
-      if [ "$?" == "1" ]; then
+    LIMIT=4
+    START=$(date +%s);
+    /sbin/choose_rom $SECONDROM
+    END=$(date +%s);
+    DIFF=$((END - START))
+      if [ "$DIFF" -lt "$LIMIT" ]; then
         SECONDROM=1
       else
         SECONDROM=0
