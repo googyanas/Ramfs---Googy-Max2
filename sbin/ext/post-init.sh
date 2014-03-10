@@ -384,6 +384,9 @@ case "$default_governor" in
   6)  
         echo "smartassV2" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
     ;;
+  7)  
+        echo "GoogyQ" > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor
+    ;;
 esac;
 
 ### Sound engine initialization ###
