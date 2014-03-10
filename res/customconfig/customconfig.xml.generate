@@ -53,6 +53,7 @@ cat << ENDCONFIG
              <spinnerItem name="zzmoove-performance" value="4"/> 
              <spinnerItem name="zzmoove-custom" value="5"/> 
              <spinnerItem name="smartassV2" value="6"/> 
+             <spinnerItem name="GoogyQ" value="7"/> 
        </spinner>
       <spinner description="Set the maximum freqency the CPU scales up to. Default: 1400 MHz." 
                name="CPU max frequency" 
@@ -274,6 +275,7 @@ done
       <seekBar description="This will prevent distortion by decreasing the output volume by the selected amount. Leave it 0 if you do not have a distortion problem." 
 		name="Negative Digital Gain" action="eq-presets digital_gain" unit=" dB" min="0" reversed="false" step="1" max="12"/>
     </settingsPane>
+    
     <settingsPane description="Optimization, conversion quality, signal processing and effect settings" name="Other Settings">
       <spinner description="Tuned WM1811 FLL to generate clock source" name="FLL Tuning" action="generic /sys/class/misc/scoobydoo_sound/fll_tuning">
              <spinnerItem name="Disabled" value="0"/> 
